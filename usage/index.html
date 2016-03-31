@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="shortcut icon" href="../img/favicon.ico">
 
-    <title>Basic Usage - zend-json-server</title>
+    <title>Usage - zend-xml2json</title>
 
     <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -57,7 +57,7 @@
             <!-- Main title -->
             <span class="navbar-brand">
               <a href="http://framework.zend.com"><img src="../img/zf-logo-mark.png" height="28" alt="Zend Framework" /></a>
-              <a href="..">zend-json-server</a>
+              <a href="..">zend-xml2json</a>
             </span>
         </div>
 
@@ -74,53 +74,8 @@
                 
                 
                 
-                    <li >
-                        <a href="../intro/">Intro</a>
-                    </li>
-                
-                
-                
                     <li class="active">
-                        <a href="./">Basic Usage</a>
-                    </li>
-                
-                
-                
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="../server/">Zend\Json\Server\Server</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../request/">Zend\Json\Server\Request</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../response/">Zend\Json\Server\Response</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../error/">Zend\Json\Server\Error</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../smd/">Service Mapping Description (SMD)</a>
-</li>
-
-                        
-                        </ul>
+                        <a href="./">Usage</a>
                     </li>
                 
                 
@@ -135,19 +90,19 @@
                 </li>
                 
                     <li >
-                        <a rel="prev" href="../intro/">
+                        <a rel="prev" href="..">
                             <i class="fa fa-arrow-left"></i> Previous
                         </a>
                     </li>
-                    <li >
-                        <a rel="next" href="../server/">
+                    <li class="disabled">
+                        <a rel="next" >
                             Next <i class="fa fa-arrow-right"></i>
                         </a>
                     </li>
                 
                 
                     <li>
-                        <a href="https://github.com/zendframework/zend-json-server">
+                        <a href="https://github.com/zendframework/zend-xml2json">
                             
                                 <i class="fa fa-github"></i>
                             
@@ -166,7 +121,9 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#basic-usage">Basic Usage</a></li>
+        <li class="main active"><a href="#xml-to-json-conversion">XML to JSON conversion</a></li>
+        
+            <li><a href="#example">Example</a></li>
         
     
     </ul>
@@ -178,146 +135,115 @@
   
     
   
-  <li class="active">Basic Usage</li>
+  <li class="active">Usage</li>
 </ol>
 
 <nav class="hidden-lg">
   <ul class="pager">
     <li class="previous">
-      <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+      <a rel="prev" href=".."><i class="fa fa-arrow-left"></i> Previous</a>
     </li>
-    <li class="next">
-      <a rel="next" href="../server/">Next <i class="fa fa-arrow-right"></i></a>
+    <li class="next disabled ">
+      <a rel="next" >Next <i class="fa fa-arrow-right"></i></a>
     </li>
   </ul>
 </nav>
 
-<h1 id="basic-usage">Basic Usage</h1>
-<p>First, let's define a class we wish to expose via the JSON-RPC server. We'll
-call the class <code>Calculator</code>, and define methods for <code>add</code>, <code>subtract</code>,
-<code>multiply</code>, and <code>divide</code>:</p>
-<pre class="codehilite"><code class="language-php">/**
- * Calculator - sample class to expose via JSON-RPC
- */
-class Calculator
-{
-    /**
-     * Return sum of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function add($x, $y)
-    {
-        return $x + $y;
-    }
+<h1 id="xml-to-json-conversion">XML to JSON conversion</h1>
+<p>zend-xml2json provides a convenience method for transforming XML formatted data
+into JSON format.  This feature was inspired from an <a href="http://www.ibm.com/developerworks/xml/library/x-xml2jsonphp/">IBM developerWorks
+article</a>.</p>
+<p>zend-xml2json provides the static method <code>Zend\Xml2Json\Xml2Json::fromXml()</code>.
+This method will generate JSON from a given XML input. This method takes any
+arbitrary XML string as an input parameter, and optionally a boolean parameter
+to instruct the conversion logic as to whether or not to ignore XML attributes
+during the conversion process. If the optional flag for converting attributes is
+not provided, then the default behavior is to ignore the XML attributes.</p>
+<p>A basic example follows:</p>
+<pre class="codehilite"><code class="language-php">$jsonContents = Zend\Xml2Json\Xml2Json::fromXml($xmlStringContents, true);</code></pre>
 
-    /**
-     * Return difference of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function subtract($x, $y)
-    {
-        return $x - $y;
-    }
 
-    /**
-     * Return product of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function multiply($x, $y)
-    {
-        return $x * $y;
-    }
+<p><code>Zend\Xml2Json\Xml2Json::fromXml()</code> converts the XML formatted string input
+parameter and returns the equivalent JSON formatted string output. In case of an
+XML input format error or conversion logic error, it raises an exception.</p>
+<p>The conversion logic uses recursive techniques to traverse the XML tree,
+supporting up to 25 levels deep. Beyond that depth, it raises a
+<code>Zend\Xml2Json\Exception\RecursionException</code>.</p>
+<h2 id="example">Example</h2>
+<p>The following example demonstrates both the XML input string passed to and the JSON
+output string returned from <code>Zend\Xml2Json\Xml2Json::fromXml()</code>. This example
+passes a boolean false to the second argument in order to receive a
+representation of the XML attributes in the returned JSON.</p>
+<p>First, let's look at the XML:</p>
+<pre class="codehilite"><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;books&gt;
+    &lt;book id=&quot;1&quot;&gt;
+        &lt;title&gt;Code Generation in Action&lt;/title&gt;
+        &lt;author&gt;&lt;first&gt;Jack&lt;/first&gt;&lt;last&gt;Herrington&lt;/last&gt;&lt;/author&gt;
+        &lt;publisher&gt;Manning&lt;/publisher&gt;
+    &lt;/book&gt;
 
-    /**
-     * Return the division of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return float
-     */
-    public function divide($x, $y)
-    {
-        return $x / $y;
-    }
+    &lt;book id=&quot;2&quot;&gt;
+        &lt;title&gt;PHP Hacks&lt;/title&gt;
+        &lt;author&gt;&lt;first&gt;Jack&lt;/first&gt;&lt;last&gt;Herrington&lt;/last&gt;&lt;/author&gt;
+        &lt;publisher&gt;O'Reilly&lt;/publisher&gt;
+    &lt;/book&gt;
+
+    &lt;book id=&quot;3&quot;&gt;
+        &lt;title&gt;Podcasting Hacks&lt;/title&gt;
+        &lt;author&gt;&lt;first&gt;Jack&lt;/first&gt;&lt;last&gt;Herrington&lt;/last&gt;&lt;/author&gt;
+        &lt;publisher&gt;O'Reilly&lt;/publisher&gt;
+    &lt;/book&gt;
+&lt;/books&gt;</code></pre>
+
+
+<p>Assuming that the above is captured in the variable <code>$xml</code>, we'll now pass it to
+the following code:</p>
+<pre class="codehilite"><code class="language-php">// Passing the second parameter to ensure we get attributes as well.
+$json = Zend\Xml2Json\Xml2Json::fromXml($xml, false);</code></pre>
+
+
+<p>This results in the following JSON:</p>
+<pre class="codehilite"><code class="language-json">{
+   &quot;books&quot; : {
+      &quot;book&quot; : [ {
+         &quot;@attributes&quot; : {
+            &quot;id&quot; : &quot;1&quot;
+         },
+         &quot;title&quot; : &quot;Code Generation in Action&quot;,
+         &quot;author&quot; : {
+            &quot;first&quot; : &quot;Jack&quot;, &quot;last&quot; : &quot;Herrington&quot;
+         },
+         &quot;publisher&quot; : &quot;Manning&quot;
+      }, {
+         &quot;@attributes&quot; : {
+            &quot;id&quot; : &quot;2&quot;
+         },
+         &quot;title&quot; : &quot;PHP Hacks&quot;, &quot;author&quot; : {
+            &quot;first&quot; : &quot;Jack&quot;, &quot;last&quot; : &quot;Herrington&quot;
+         },
+         &quot;publisher&quot; : &quot;O'Reilly&quot;
+      }, {
+         &quot;@attributes&quot; : {
+            &quot;id&quot; : &quot;3&quot;
+         },
+         &quot;title&quot; : &quot;Podcasting Hacks&quot;, &quot;author&quot; : {
+            &quot;first&quot; : &quot;Jack&quot;, &quot;last&quot; : &quot;Herrington&quot;
+         },
+         &quot;publisher&quot; : &quot;O'Reilly&quot;
+      }
+   ]}
 }</code></pre>
-
-
-<p>Note that each method has a docblock with entries indicating each parameter and
-its type, as well as an entry for the return value. This is <strong>absolutely
-critical</strong> when utilizing zend-json-server or any other server component in
-Zend Framework, for that matter.</p>
-<p>Now we'll create a script to handle the requests:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-
-// Indicate what functionality is available:
-$server-&gt;setClass('Calculator');
-
-// Handle the request:
-$server-&gt;handle();</code></pre>
-
-
-<p>However, this will not address the issue of returning an SMD so that the
-JSON-RPC client can autodiscover methods. That can be accomplished by
-determining the HTTP request method, and then specifying some server
-metadata:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-$server-&gt;setClass('Calculator');
-
-if ('GET' == $_SERVER['REQUEST_METHOD']) {
-    // Indicate the URL endpoint, and the JSON-RPC version used:
-    $server-&gt;setTarget('/json-rpc.php')
-           -&gt;setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
-
-    // Grab the SMD
-    $smd = $server-&gt;getServiceMap();
-
-    // Return the SMD to the client
-    header('Content-Type: application/json');
-    echo $smd;
-    return;
-}
-
-$server-&gt;handle();</code></pre>
-
-
-<p>If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
-special compatibility flag to ensure that the two interoperate properly:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-$server-&gt;setClass('Calculator');
-
-if ('GET' == $_SERVER['REQUEST_METHOD']) {
-    $server-&gt;setTarget('/json-rpc.php')
-           -&gt;setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
-    $smd = $server-&gt;getServiceMap();
-
-    // Set Dojo compatibility:
-    $smd-&gt;setDojoCompatible(true);
-
-    header('Content-Type: application/json');
-    echo $smd;
-    return;
-}
-
-$server-&gt;handle();</code></pre>
 
 <hr />
 
 <nav>
   <ul class="pager">
     <li class="previous">
-      <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+      <a rel="prev" href=".."><i class="fa fa-arrow-left"></i> Previous</a>
     </li>
-    <li class="next">
-      <a rel="next" href="../server/">Next <i class="fa fa-arrow-right"></i></a>
+    <li class="next disabled ">
+      <a rel="next" >Next <i class="fa fa-arrow-right"></i></a>
     </li>
   </ul>
 </nav></div>
