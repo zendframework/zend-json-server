@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="shortcut icon" href="../img/favicon.ico">
 
-    <title>Basic Usage - zend-json-server</title>
+    <title>Zend\Json\Server\Error - zend-json-server</title>
 
     <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -80,13 +80,13 @@
                 
                 
                 
-                    <li class="active">
-                        <a href="./">Basic Usage</a>
+                    <li >
+                        <a href="../usage/">Basic Usage</a>
                     </li>
                 
                 
                 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
@@ -109,8 +109,8 @@
 
                         
                             
-<li >
-    <a href="../error/">Zend\Json\Server\Error</a>
+<li class="active">
+    <a href="./">Zend\Json\Server\Error</a>
 </li>
 
                         
@@ -160,7 +160,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#basic-usage">Basic Usage</a></li>
+        <li class="main active"><a href="#zend92json92server92error">Zend\Json\Server\Error</a></li>
         
     
     </ul>
@@ -168,10 +168,10 @@
     
     <ul class="pager hidden-print">
       <li class="previous">
-        <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+        <a rel="prev" href="../response/"><i class="fa fa-arrow-left"></i> Previous</a>
       </li>
       <li class="next">
-        <a rel="next" href="../server/">Next <i class="fa fa-arrow-right"></i></a>
+        <a rel="next" href="../smd/">Next <i class="fa fa-arrow-right"></i></a>
       </li>
     </ul>
     
@@ -182,126 +182,35 @@
   <li><a href="..">Docs</a> &raquo;</li>
   
     
+      
+        <li>Reference &raquo;</li>
+      
+    
   
-  <li class="active">Basic Usage</li>
+  <li class="active">Zend\Json\Server\Error</li>
 </ol>
 
-<h1 id="basic-usage">Basic Usage</h1>
-<p>First, let's define a class we wish to expose via the JSON-RPC server. We'll
-call the class <code>Calculator</code>, and define methods for <code>add</code>, <code>subtract</code>,
-<code>multiply</code>, and <code>divide</code>:</p>
-<pre class="codehilite"><code class="language-php">/**
- * Calculator - sample class to expose via JSON-RPC
- */
-class Calculator
-{
-    /**
-     * Return sum of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function add($x, $y)
-    {
-        return $x + $y;
-    }
-
-    /**
-     * Return difference of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function subtract($x, $y)
-    {
-        return $x - $y;
-    }
-
-    /**
-     * Return product of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function multiply($x, $y)
-    {
-        return $x * $y;
-    }
-
-    /**
-     * Return the division of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return float
-     */
-    public function divide($x, $y)
-    {
-        return $x / $y;
-    }
-}</code></pre>
-
-
-<p>Note that each method has a docblock with entries indicating each parameter and
-its type, as well as an entry for the return value. This is <strong>absolutely
-critical</strong> when utilizing zend-json-server or any other server component in
-Zend Framework, for that matter.</p>
-<p>Now we'll create a script to handle the requests:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-
-// Indicate what functionality is available:
-$server-&gt;setClass('Calculator');
-
-// Handle the request:
-$server-&gt;handle();</code></pre>
-
-
-<p>However, this will not address the issue of returning an SMD so that the
-JSON-RPC client can autodiscover methods. That can be accomplished by
-determining the HTTP request method, and then specifying some server
-metadata:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-$server-&gt;setClass('Calculator');
-
-if ('GET' == $_SERVER['REQUEST_METHOD']) {
-    // Indicate the URL endpoint, and the JSON-RPC version used:
-    $server-&gt;setTarget('/json-rpc.php')
-           -&gt;setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
-
-    // Grab the SMD
-    $smd = $server-&gt;getServiceMap();
-
-    // Return the SMD to the client
-    header('Content-Type: application/json');
-    echo $smd;
-    return;
-}
-
-$server-&gt;handle();</code></pre>
-
-
-<p>If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
-special compatibility flag to ensure that the two interoperate properly:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-$server-&gt;setClass('Calculator');
-
-if ('GET' == $_SERVER['REQUEST_METHOD']) {
-    $server-&gt;setTarget('/json-rpc.php')
-           -&gt;setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
-    $smd = $server-&gt;getServiceMap();
-
-    // Set Dojo compatibility:
-    $smd-&gt;setDojoCompatible(true);
-
-    header('Content-Type: application/json');
-    echo $smd;
-    return;
-}
-
-$server-&gt;handle();</code></pre>
+<h1 id="zend92json92server92error">Zend\Json\Server\Error</h1>
+<p>JSON-RPC has a special format for reporting error conditions. All errors need
+to provide, minimally, an error message and error code; optionally, they can
+provide additional data, such as a backtrace.</p>
+<p>Error codes are derived from those recommended by <a href="http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php">the XML-RPC EPI project</a>.
+<code>Zend\Json\Server</code> appropriately assigns the code based on the error condition.
+For application exceptions, the code '-32000' is used.</p>
+<p><code>Zend\Json\Server\Error</code> exposes the following methods:</p>
+<ul>
+<li><code>setCode($code)</code>: Set the error code; if the code is not in the accepted
+  XML-RPC error code range, -32000 will be assigned.</li>
+<li><code>getCode()</code>: Retrieve the current error code.</li>
+<li><code>setMessage($message)</code>: Set the error message.</li>
+<li><code>getMessage()</code>: Retrieve the current error message.</li>
+<li><code>setData($data)</code>: Set auxiliary data further qualifying the error, such as a
+  backtrace.</li>
+<li><code>getData()</code>: Retrieve any current auxiliary error data.</li>
+<li><code>toArray()</code>: Cast the error to an array. The array will contain the keys
+  'code', 'message', and 'data'.</li>
+<li><code>toJson()</code>: Cast the error to a JSON-RPC error representation.</li>
+</ul>
 
 <hr />
 
@@ -309,10 +218,10 @@ $server-&gt;handle();</code></pre>
 <nav>
   <ul class="pager hidden-print">
     <li class="previous">
-      <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+      <a rel="prev" href="../response/"><i class="fa fa-arrow-left"></i> Previous</a>
     </li>
     <li class="next">
-      <a rel="next" href="../server/">Next <i class="fa fa-arrow-right"></i></a>
+      <a rel="next" href="../smd/">Next <i class="fa fa-arrow-right"></i></a>
     </li>
   </ul>
 </nav>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <link rel="shortcut icon" href="../img/favicon.ico">
 
-    <title>Basic Usage - zend-json-server</title>
+    <title>Service Mapping Description (SMD) - zend-json-server</title>
 
     <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
@@ -80,13 +80,13 @@
                 
                 
                 
-                    <li class="active">
-                        <a href="./">Basic Usage</a>
+                    <li >
+                        <a href="../usage/">Basic Usage</a>
                     </li>
                 
                 
                 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
@@ -115,8 +115,8 @@
 
                         
                             
-<li >
-    <a href="../smd/">Service Mapping Description (SMD)</a>
+<li class="active">
+    <a href="./">Service Mapping Description (SMD)</a>
 </li>
 
                         
@@ -160,7 +160,7 @@
         <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#basic-usage">Basic Usage</a></li>
+        <li class="main active"><a href="#smd-service-mapping-description">SMD: Service Mapping Description</a></li>
         
     
     </ul>
@@ -168,10 +168,10 @@
     
     <ul class="pager hidden-print">
       <li class="previous">
-        <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+        <a rel="prev" href="../error/"><i class="fa fa-arrow-left"></i> Previous</a>
       </li>
-      <li class="next">
-        <a rel="next" href="../server/">Next <i class="fa fa-arrow-right"></i></a>
+      <li class="next disabled ">
+        <a rel="next" >Next <i class="fa fa-arrow-right"></i></a>
       </li>
     </ul>
     
@@ -182,126 +182,121 @@
   <li><a href="..">Docs</a> &raquo;</li>
   
     
+      
+        <li>Reference &raquo;</li>
+      
+    
   
-  <li class="active">Basic Usage</li>
+  <li class="active">Service Mapping Description (SMD)</li>
 </ol>
 
-<h1 id="basic-usage">Basic Usage</h1>
-<p>First, let's define a class we wish to expose via the JSON-RPC server. We'll
-call the class <code>Calculator</code>, and define methods for <code>add</code>, <code>subtract</code>,
-<code>multiply</code>, and <code>divide</code>:</p>
-<pre class="codehilite"><code class="language-php">/**
- * Calculator - sample class to expose via JSON-RPC
- */
-class Calculator
-{
-    /**
-     * Return sum of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function add($x, $y)
-    {
-        return $x + $y;
-    }
-
-    /**
-     * Return difference of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function subtract($x, $y)
-    {
-        return $x - $y;
-    }
-
-    /**
-     * Return product of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function multiply($x, $y)
-    {
-        return $x * $y;
-    }
-
-    /**
-     * Return the division of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return float
-     */
-    public function divide($x, $y)
-    {
-        return $x / $y;
-    }
-}</code></pre>
-
-
-<p>Note that each method has a docblock with entries indicating each parameter and
-its type, as well as an entry for the return value. This is <strong>absolutely
-critical</strong> when utilizing zend-json-server or any other server component in
-Zend Framework, for that matter.</p>
-<p>Now we'll create a script to handle the requests:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-
-// Indicate what functionality is available:
-$server-&gt;setClass('Calculator');
-
-// Handle the request:
-$server-&gt;handle();</code></pre>
-
-
-<p>However, this will not address the issue of returning an SMD so that the
-JSON-RPC client can autodiscover methods. That can be accomplished by
-determining the HTTP request method, and then specifying some server
-metadata:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-$server-&gt;setClass('Calculator');
-
-if ('GET' == $_SERVER['REQUEST_METHOD']) {
-    // Indicate the URL endpoint, and the JSON-RPC version used:
-    $server-&gt;setTarget('/json-rpc.php')
-           -&gt;setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
-
-    // Grab the SMD
-    $smd = $server-&gt;getServiceMap();
-
-    // Return the SMD to the client
-    header('Content-Type: application/json');
-    echo $smd;
-    return;
-}
-
-$server-&gt;handle();</code></pre>
-
-
-<p>If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
-special compatibility flag to ensure that the two interoperate properly:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
-$server-&gt;setClass('Calculator');
-
-if ('GET' == $_SERVER['REQUEST_METHOD']) {
-    $server-&gt;setTarget('/json-rpc.php')
-           -&gt;setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
-    $smd = $server-&gt;getServiceMap();
-
-    // Set Dojo compatibility:
-    $smd-&gt;setDojoCompatible(true);
-
-    header('Content-Type: application/json');
-    echo $smd;
-    return;
-}
-
-$server-&gt;handle();</code></pre>
+<h1 id="smd-service-mapping-description">SMD: Service Mapping Description</h1>
+<p>SMD stands for Service Mapping Description, a JSON schema that defines how a
+client can interact with a particular web service. At the time of this writing,
+the <a href="http://www.jsonrpc.org/specification">specification</a> has not yet been
+formally ratified, but it is in use already within Dojo Toolkit as well as
+other JSON-RPC consumer clients.</p>
+<p>At its most basic, a Service Mapping Description indicates the method of
+transport (<code>POST</code>, <code>GET</code>, TCP/IP, etc), the request envelope type (usually
+based on the protocol of the server), the target URL of the service provider,
+and a map of services available. In the case of JSON-RPC, the service map is a
+list of available methods, which each method documenting the available
+parameters and their types, as well as the expected return value type.</p>
+<p><code>Zend\Json\Server\Smd</code> provides an object-oriented way to build service maps.
+At its most basic, you pass it metadata describing the service using mutators,
+and specify services (methods and functions).</p>
+<p>The service descriptions themselves are typically instances of
+<code>Zend\Json\Server\Smd\Service</code>; you can also pass all information as an array
+to the various service mutators in <code>Zend\Json\Server\Smd</code>, and it will
+instantiate a service for you. The service objects contain information such as
+the name of the service (typically the function or method name), the parameters
+(names, types, and position), and the return value type. Optionally, each
+service can have its own target and envelope, though this functionality is
+rarely used.</p>
+<p><code>Zend\Json\Server\Server</code> actually does all of this behind the scenes for you,
+by using reflection on the attached classes and functions; you should create
+your own service maps only if you need to provide custom functionality that
+class and function introspection cannot offer.</p>
+<p>Methods available in <code>Zend\Json\Server\Smd</code> include:</p>
+<ul>
+<li><code>setOptions(array $options)</code>: Setup an SMD object from an array of options.
+  All mutators (methods beginning with 'set') can be used as keys.</li>
+<li><code>setTransport($transport)</code>: Set the transport used to access the service;
+  only POST is currently supported.</li>
+<li><code>getTransport()</code>: Get the current service transport.</li>
+<li><code>setEnvelope($envelopeType)</code>: Set the request envelope that should be used to
+  access the service.  Currently, supports the constants
+  <code>Zend\Json\Server\Smd::ENV_JSONRPC_1</code> and
+  <code>Zend\Json\Server\Smd::ENV_JSONRPC_2</code>.</li>
+<li><code>getEnvelope()</code>: Get the current request envelope.</li>
+<li><code>setContentType($type)</code>: Set the content type requests should use (by
+  default, this is 'application/json').</li>
+<li><code>getContentType()</code>: Get the current content type for requests to the service.</li>
+<li><code>setTarget($target)</code>: Set the URL endpoint for the service.</li>
+<li><code>getTarget()</code>: Get the URL endpoint for the service.</li>
+<li><code>setId($id)</code>: Typically, this is the URL endpoint of the service (same as the
+  target).</li>
+<li><code>getId()</code>: Retrieve the service ID (typically the URL endpoint of the
+  service).</li>
+<li><code>setDescription($description)</code>: Set a service description (typically
+  narrative information describing the purpose of the service).</li>
+<li><code>getDescription()</code>: Get the service description.</li>
+<li><code>setDojoCompatible($flag)</code>: Set a flag indicating whether or not the SMD is
+  compatible with Dojo toolkit. When <code>TRUE</code>, the generated JSON SMD will be
+  formatted to comply with the format that Dojo's JSON-RPC client expects.</li>
+<li><code>isDojoCompatible()</code>: Returns the value of the Dojo compatibility flag
+  (<code>FALSE</code>, by default).</li>
+<li><code>addService($service)</code>: Add a service to the map. May be an array of
+  information to pass to the constructor of <code>Zend\Json\Server\Smd\Service</code>, or
+  an instance of that class.</li>
+<li><code>addServices(array $services)</code>: Add multiple services at once.</li>
+<li><code>setServices(array $services)</code>: Add multiple services at once, overwriting
+  any previously set services.</li>
+<li><code>getService($name)</code>: Get a service by its name.</li>
+<li><code>getServices()</code>: Get all attached services.</li>
+<li><code>removeService($name)</code>: Remove a service from the map.</li>
+<li><code>toArray()</code>: Cast the service map to an array.</li>
+<li><code>toDojoArray()</code>: Cast the service map to an array compatible with Dojo
+  Toolkit.</li>
+<li><code>toJson()</code>: Cast the service map to a JSON representation.</li>
+</ul>
+<p><code>Zend\Json\Server\Smd\Service</code> has the following methods:</p>
+<ul>
+<li><code>setOptions(array $options)</code>: Set object state from an array. Any mutator
+  (methods beginning with 'set') may be used as a key and set via this method.</li>
+<li><code>setName($name)</code>: Set the service name (typically, the function or method
+  name).</li>
+<li><code>getName()</code>: Retrieve the service name.</li>
+<li><code>setTransport($transport)</code>: Set the service transport (currently, only
+  transports supported by <code>Zend\Json\Server\Smd</code> are allowed).</li>
+<li><code>getTransport()</code>: Retrieve the current transport.</li>
+<li><code>setTarget($target)</code>: Set the URL endpoint of the service (typically, this
+  will be the same as the overall SMD to which the service is attached).</li>
+<li><code>getTarget()</code>: Get the URL endpoint of the service.</li>
+<li><code>setEnvelope($envelopeType)</code>: Set the service envelope (currently, only
+  envelopes supported by <code>Zend\Json\Server\Smd</code> are allowed).</li>
+<li><code>getEnvelope()</code>: Retrieve the service envelope type.
+  <code>addParam($type, array $options = array(), $order = null)</code>: Add a parameter
+  to the service. By default, only the parameter type is necessary. However,
+  you may also specify the order, as well as options such as:<ul>
+<li><strong>name</strong>: the parameter name</li>
+<li><strong>optional</strong>: whether or not the parameter is optional</li>
+<li><strong>default</strong>: a default value for the parameter</li>
+<li><strong>description</strong>: text describing the parameter</li>
+</ul>
+</li>
+<li><code>addParams(array $params)</code>: Add several parameters at once; each param should
+  be an assoc array containing minimally the key 'type' describing the
+  parameter type, and optionally the key 'order'; any other keys will be passed
+  as <code>$options</code> to <code>addOption()</code>.</li>
+<li><code>setParams(array $params)</code>: Set many parameters at once, overwriting any
+  existing parameters.</li>
+<li><code>getParams()</code>: Retrieve all currently set parameters.</li>
+<li><code>setReturn($type)</code>: Set the return value type of the service.</li>
+<li><code>getReturn()</code>: Get the return value type of the service.</li>
+<li><code>toArray()</code>: Cast the service to an array.</li>
+<li><code>toJson()</code>: Cast the service to a JSON representation.</li>
+</ul>
 
 <hr />
 
@@ -309,10 +304,10 @@ $server-&gt;handle();</code></pre>
 <nav>
   <ul class="pager hidden-print">
     <li class="previous">
-      <a rel="prev" href="../intro/"><i class="fa fa-arrow-left"></i> Previous</a>
+      <a rel="prev" href="../error/"><i class="fa fa-arrow-left"></i> Previous</a>
     </li>
-    <li class="next">
-      <a rel="next" href="../server/">Next <i class="fa fa-arrow-right"></i></a>
+    <li class="next disabled ">
+      <a rel="next" >Next <i class="fa fa-arrow-right"></i></a>
     </li>
   </ul>
 </nav>

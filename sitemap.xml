@@ -4,7 +4,15 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2016-03-31</lastmod>
+     <lastmod>2016-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/intro/</loc>
+     <lastmod>2016-04-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,9 +20,43 @@
     
     <url>
      <loc>None/usage/</loc>
-     <lastmod>2016-03-31</lastmod>
+     <lastmod>2016-04-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
+    
+
+    
+        
+    <url>
+     <loc>None/server/</loc>
+     <lastmod>2016-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/request/</loc>
+     <lastmod>2016-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/response/</loc>
+     <lastmod>2016-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/error/</loc>
+     <lastmod>2016-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/smd/</loc>
+     <lastmod>2016-04-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>
