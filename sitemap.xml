@@ -3,24 +3,24 @@
 
     
     <url>
-     <loc>None/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>None/intro/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/intro/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>None/usage/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/usage/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -28,32 +28,32 @@
     
         
     <url>
-     <loc>None/server/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/server/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/request/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/request/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/response/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/response/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/error/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/error/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None/smd/</loc>
-     <lastmod>2016-07-05</lastmod>
+     <loc>/smd/</loc>
+     <lastmod>2017-07-18</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

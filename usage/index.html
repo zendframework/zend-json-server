@@ -245,7 +245,6 @@ class Calculator
     }
 }</code></pre>
 
-
 <p>Note that each method has a docblock with entries indicating each parameter and
 its type, as well as an entry for the return value. This is <strong>absolutely
 critical</strong> when utilizing zend-json-server or any other server component in
@@ -258,7 +257,6 @@ $server-&gt;setClass('Calculator');
 
 // Handle the request:
 $server-&gt;handle();</code></pre>
-
 
 <p>However, this will not address the issue of returning an SMD so that the
 JSON-RPC client can autodiscover methods. That can be accomplished by
@@ -282,7 +280,6 @@ if ('GET' == $_SERVER['REQUEST_METHOD']) {
 }
 
 $server-&gt;handle();</code></pre>
-
 
 <p>If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
 special compatibility flag to ensure that the two interoperate properly:</p>
