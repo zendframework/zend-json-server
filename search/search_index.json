@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/",
-            "text": "zend-json-server\n\n\n\n\n\n\nProvides a JSON-RPC server implementation.\n\n\n\n\nFile issues at https://github.com/zendframework/zend-json-server/issues\n\n\nDocumentation is at http://framework.zend.com/manual/current/en/index.html#zend-json-server",
-            "title": "Home"
+            "text": "zend-json-server\n\n\n\n\n\n\nProvides a JSON-RPC server implementation.\n\n\n\n\nFile issues at https://github.com/zendframework/zend-json-server/issues\n\n\nDocumentation is at https://docs.zendframework.com/zend-json-server/",
+            "title": "zend-json-server"
         },
         {
             "location": "/#zend-json-server",
-            "text": "Provides a JSON-RPC server implementation.   File issues at https://github.com/zendframework/zend-json-server/issues  Documentation is at http://framework.zend.com/manual/current/en/index.html#zend-json-server",
+            "text": "Provides a JSON-RPC server implementation.   File issues at https://github.com/zendframework/zend-json-server/issues  Documentation is at https://docs.zendframework.com/zend-json-server/",
             "title": "zend-json-server"
         },
         {
