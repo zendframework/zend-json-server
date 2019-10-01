@@ -271,7 +271,7 @@
 <p>First, let's define a class we wish to expose via the JSON-RPC server. We'll
 call the class <code>Calculator</code>, and define methods for <code>add</code>, <code>subtract</code>,
 <code>multiply</code>, and <code>divide</code>:</p>
-<pre class="codehilite"><code class="language-php">/**
+<p> <pre class=codehilite><code class=language-php>/**
  * Calculator - sample class to expose via JSON-RPC
  */
 class Calculator
@@ -323,26 +323,24 @@ class Calculator
     {
         return $x / $y;
     }
-}</code></pre>
-
+}</code></pre></p>
 <p>Note that each method has a docblock with entries indicating each parameter and
 its type, as well as an entry for the return value. This is <strong>absolutely
 critical</strong> when utilizing zend-json-server or any other server component in
 Zend Framework, for that matter.</p>
 <p>Now we'll create a script to handle the requests:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
+<p> <pre class=codehilite><code class=language-php>$server = new Zend\Json\Server\Server();
 
 // Indicate what functionality is available:
 $server-&gt;setClass('Calculator');
 
 // Handle the request:
-$server-&gt;handle();</code></pre>
-
+$server-&gt;handle();</code></pre></p>
 <p>However, this will not address the issue of returning an SMD so that the
 JSON-RPC client can autodiscover methods. That can be accomplished by
 determining the HTTP request method, and then specifying some server
 metadata:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
+<p> <pre class=codehilite><code class=language-php>$server = new Zend\Json\Server\Server();
 $server-&gt;setClass('Calculator');
 
 if ('GET' == $_SERVER['REQUEST_METHOD']) {
@@ -359,11 +357,10 @@ if ('GET' == $_SERVER['REQUEST_METHOD']) {
     return;
 }
 
-$server-&gt;handle();</code></pre>
-
+$server-&gt;handle();</code></pre></p>
 <p>If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
 special compatibility flag to ensure that the two interoperate properly:</p>
-<pre class="codehilite"><code class="language-php">$server = new Zend\Json\Server\Server();
+<p> <pre class=codehilite><code class=language-php>$server = new Zend\Json\Server\Server();
 $server-&gt;setClass('Calculator');
 
 if ('GET' == $_SERVER['REQUEST_METHOD']) {
@@ -379,7 +376,7 @@ if ('GET' == $_SERVER['REQUEST_METHOD']) {
     return;
 }
 
-$server-&gt;handle();</code></pre>
+$server-&gt;handle();</code></pre></p>
 
 
 
@@ -413,7 +410,7 @@ $server-&gt;handle();</code></pre>
     <div class="help-wanted">
         <p>
             Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/zendframework/zend-json-server/edit/master/docs/usage.md" target="_blank" class="help-wanted__link">
+            <a href="https://github.com/zendframework/zend-json-server/edit/master/docs/book/usage.md" target="_blank" class="help-wanted__link">
                 Edit this page on GitHub!
             </a>
         </p>
