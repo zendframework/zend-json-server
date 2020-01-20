@@ -2,7 +2,7 @@
 
 > ## Repository abandoned 2019-12-31
 >
-> This repository has moved to laminas/laminas-json-server.
+> This repository has moved to [laminas/laminas-json-server](https://github.com/laminas/laminas-json-server).
 
 [![Build Status](https://secure.travis-ci.org/zendframework/zend-json-server.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-json-server)
 [![Coverage Status](https://coveralls.io/repos/github/zendframework/zend-json-server/badge.svg?branch=master)](https://coveralls.io/github/zendframework/zend-json-server?branch=master)
